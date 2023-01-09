@@ -35,7 +35,7 @@ export const ExampleForm () => {
     <div>
       <h2>Example Form</h2>
       <form onSubmit={submit}>
-        {/* use build-in native wrapper for native input elements */}
+        {/* use built-in native wrapper for native input elements */}
         <input {...native(field('email'))} placeholder="Enter email" />
         <input
           {...native(field('password'))}
