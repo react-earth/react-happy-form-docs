@@ -15,7 +15,7 @@
 const sidebars = {
   documentSidebar: [
     'document/quick-start',
-    'document/standard-form-components',
+    'document/standard-form-component',
     'document/form-validation',
     {
       'Third-party Integrations': ['document/third-party-integrations/mui', 'document/third-party-integrations/yup'],
