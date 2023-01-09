@@ -1,11 +1,11 @@
 # React Happy Form Docs
 
-> This website is built using [Docusaurus 2](https://docusaurus.io/)
+This website is built using [Docusaurus](https://docusaurus.io/).
 
 ### Installation
 
 ```
-$ npm
+$ npm install
 ```
 
 ### Local Development
