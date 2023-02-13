@@ -18,7 +18,10 @@ const sidebars = {
     'document/standard-form-component',
     'document/form-validation',
     {
-      'Third-party Integrations': ['document/third-party-integrations/mui', 'document/third-party-integrations/yup'],
+      'Third-party Integrations': [
+        'document/third-party-integrations/chakra-ui',
+        'document/third-party-integrations/yup',
+      ],
     },
   ],
   apiSidebar: ['api/use-form', 'api/use-form-context', 'api/native'],
