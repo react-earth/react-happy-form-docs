@@ -27,4 +27,4 @@ Most of React UI library's form components conforms to standard form component.
 Covert non-conforming form component to standard form component:
 
 - For native or native-like form component, you can use built-in [native](/docs/api/native) wrapper.
-- For other components, you can add a simple wrapper, or use official or third-party adapter library, i.e. [MUI integration](/docs/document/third-party-integrations/mui).
+- For other components, you can add a simple wrapper, or use official or third-party adapter library, i.e. [MUI integration](/docs/document/third-party-integrations/chakra-ui).
