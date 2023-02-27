@@ -31,28 +31,30 @@ Here is an example for how to use form validation:
 ```tsx
 import { useForm, native, FormErrors } from 'react-happy-form';
 
-// define your form values type
 type FormValues = {
+  firstName?: string;
+  lastName?: string;
   email?: string;
-  password?: string;
 };
 
-export const ExampleForm = () => {
+export const App = () => {
   const { field, submit, hasError, getError } = useForm<FormValues>({
+    onSubmit: (values: FormValues) => {
+      alert(JSON.stringify(values));
+    },
     // handle form validate
     onValidate: (values: FormValues) => {
       const formErrors: FormErrors<FormValues> = new Map();
+      if (!values.firstName) {
+        formErrors.set('firstName', 'First name is required');
+      }
+      if (!values.lastName) {
+        formErrors.set('lastName', 'Last name is required');
+      }
       if (!values.email) {
         formErrors.set('email', 'Email is required');
       }
-      if (!values.password) {
-        formErrors.set('password', 'Password is required');
-      }
       return formErrors;
-    },
-    // handle form submit
-    onSubmit: (values: FormValues) => {
-      console.log(values);
     },
     // enable validation interactions
     isValidateOnTouched: true,
@@ -61,18 +63,20 @@ export const ExampleForm = () => {
 
   return (
     <div>
-      <h2>Example Form</h2>
+      <h2>Form Validation - React Happy Form</h2>
       <form onSubmit={submit}>
-        {/* use built-in native wrapper for native input elements */}
-        <input {...native(field('email'))} placeholder="Enter email" />
-        {hasError('email') && <div>{getError('email')}</div>}
-        <input {...native(field('password'))} type="password" placeholder="Enter password" />
-        {hasError('password') && <div>{getError('password')}</div>}
-        <button>Login</button>
+        <input {...native(field('firstName'))} placeholder="First name" />
+        {/* show field error */}
+        {hasError('firstName') && <span>{getError('firstName')}</span>}
+        <input {...native(field('lastName'))} placeholder="Last name" />
+        {hasError('lastName') && <span>{getError('lastName')}</span>}
+        <input {...native(field('email'))} placeholder="Email" />
+        {hasError('email') && <span>{getError('email')}</span>}
+        <button>Submit</button>
       </form>
     </div>
   );
 };
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/react-ts-xfcu48?file=ExampleForm.tsx)
+[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/form-validation-hqzo29)

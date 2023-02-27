@@ -5,7 +5,7 @@ We offered an officially adapter package for Yup: [React Happy Form Yup](https:/
 ## Install
 
 ```bash
-npm install react-happy-form-yup
+npm install yup react-happy-form-yup
 ```
 
 ## Example
@@ -19,14 +19,15 @@ import { object, string, InferType } from 'yup';
 
 // define Yup validate schema
 const formSchema = object({
-  email: string().required(),
-  password: string().required(),
+  firstName: string().required('File name is required'),
+  lastName: string().required('Last name is required'),
+  email: string().required('Email name is required'),
 });
 
 // get form values type from Yup schema
 type FormValues = InferType<typeof formSchema>;
 
-export const ExampleForm = () => {
+export const App = () => {
   const { field, submit, hasError, getError } = useForm<FormValues>({
     // use yupValidate for Yup schema
     onValidate: yupValidate(formSchema),
@@ -39,17 +40,19 @@ export const ExampleForm = () => {
 
   return (
     <div>
-      <h2>Example Form</h2>
+      <h2>Yup - React Happy Form</h2>
       <form onSubmit={submit}>
-        <input {...native(field('email'))} placeholder="Enter email" />
-        {hasError('email') && <div>{getError('email')}</div>}
-        <input {...native(field('password'))} type="password" placeholder="Enter password" />
-        {hasError('password') && <div>{getError('password')}</div>}
-        <button>Login</button>
+        <input {...native(field('firstName'))} placeholder="First name" />
+        {hasError('firstName') && <span>{getError('firstName')}</span>}
+        <input {...native(field('lastName'))} placeholder="Last name" />
+        {hasError('lastName') && <span>{getError('lastName')}</span>}
+        <input {...native(field('email'))} placeholder="Email" />
+        {hasError('email') && <span>{getError('email')}</span>}
+        <button>Submit</button>
       </form>
     </div>
   );
 };
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/react-ts-abwkag?file=ExampleForm.tsx)
+[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/yup-xdpkjs)

@@ -19,34 +19,32 @@ import { useForm, native } from 'react-happy-form';
 
 // define your form values type
 type FormValues = {
+  firstName?: string;
+  lastName?: string;
   email?: string;
-  password?: string;
 };
 
-export const ExampleForm () => {
+export const App = () => {
   const { field, submit } = useForm<FormValues>({
     // handle form submit
     onSubmit: (values: FormValues) => {
-      console.log(values);
-    }
+      alert(JSON.stringify(values));
+    },
   });
 
   return (
     <div>
       <h2>Example Form</h2>
       <form onSubmit={submit}>
-        {/* use built-in native wrapper for native input elements */}
-        <input {...native(field('email'))} placeholder="Enter email" />
-        <input
-          {...native(field('password'))}
-          type="password"
-          placeholder="Enter password"
-        />
-        <button>Login</button>
+        {/* use built-in native wrapper for native elements */}
+        <input {...native(field('firstName'))} placeholder="First name" />
+        <input {...native(field('lastName'))} placeholder="Last name" />
+        <input {...native(field('email'))} placeholder="Email" />
+        <button>Submit</button>
       </form>
     </div>
   );
-}
+};
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/react-ts-thrfw4?file=ExampleForm.tsx)
+[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/quick-start-prh3xj)
