@@ -1,53 +1,54 @@
 # Chakra UI
 
-We support popular UI library, e.g. Chakra UI, MUI, AntD...
+All Chakra UI form components are React Happy Form standard form component, so we don't need to do any adaptations!
 
 ## Example
 
 Here is an example for how to use React Happy Form with Chakra UI.
 
 ```tsx
-import { useForm, native, FormErrors, Path } from 'react-happy-form';
-import { Button, Box, Heading, Input, Stack, Radio, Checkbox, Select } from '@chakra-ui/react';
-import { FormItem } from './FormItem';
-
-const RADIO_ITEMS = [
-  { label: 'Male', value: 'male' },
-  { label: 'Female', value: 'female' },
-];
-
-const CHECKBOX_ITEMS = [
-  { label: 'Swimming', value: 'swimming' },
-  { label: 'Running', value: 'running' },
-];
-
-const SELECT_ITEMS = [
-  { label: 'Everyone can view', value: 'public' },
-  { label: 'Your friends can view', value: 'friends' },
-  { label: 'Only your can view', value: 'private' },
-];
+import { useForm, native, FormErrors } from 'react-happy-form';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  VStack,
+  Text,
+  RadioGroup,
+  HStack,
+  Radio,
+} from '@chakra-ui/react';
 
 type FormValues = {
-  name?: string;
-  sex?: string;
-  hobbies?: string[];
-  privacy?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  gender?: 'male' | 'female';
 };
 
-export const ExampleForm = () => {
+export const App = () => {
   const { field, submit, hasError, getError } = useForm<FormValues>({
     onSubmit: (values: FormValues) => {
-      console.log(values);
+      alert(JSON.stringify(values));
     },
     onValidate: (values: FormValues) => {
-      const errors: FormErrors<FormValues> = new Map();
-      if (!values.name) {
-        errors.set('name', 'Name is required');
+      const formErrors: FormErrors<FormValues> = new Map();
+      if (!values.firstName) {
+        formErrors.set('firstName', 'First name is required');
       }
-      if (!values.hobbies || values.hobbies.length === 0) {
-        errors.set('hobbies', 'Hobbies is required');
+      if (!values.lastName) {
+        formErrors.set('lastName', 'Last name is required');
       }
-      return errors;
+      if (!values.email) {
+        formErrors.set('email', 'Email is required');
+      }
+      if (!values.gender) {
+        formErrors.set('gender', 'Gender is required');
+      }
+      return formErrors;
     },
     isValidateOnTouched: true,
     isFocusOnValidateFailed: true,
@@ -55,67 +56,44 @@ export const ExampleForm = () => {
 
   return (
     <Box p="4">
+      <Text fontSize="xl" fontWeight="bold" textAlign="center">
+        Charkra UI - React Happy Form
+      </Text>
       <form onSubmit={submit}>
-        <Stack gap="4">
-          <Heading textAlign="center">Example Form</Heading>
-          <FormItem label="Name" required error={getError('name')}>
-            {/* Input component */}
-            <Input {...native(field('name'))} placeholder="Please enter your name" isInvalid={hasError('name')} />
-          </FormItem>
-          <FormItem label="Sex" required error={getError('sex')}>
-            {/* Radio component */}
-            <Stack direction="row" gap="2">
-              {RADIO_ITEMS.map((item) => (
-                <Radio
-                  key={item.value}
-                  {...native(field('sex'), {
-                    type: 'radio',
-                    value: item.value,
-                    valueKey: 'isChecked',
-                  })}
-                  isInvalid={hasError('sex')}
-                >
-                  {item.label}
-                </Radio>
-              ))}
-            </Stack>
-          </FormItem>
-          <FormItem label="Hobbies" required error={getError('hobbies')}>
-            {/* Checkbox component */}
-            <Stack direction="row" gap="2">
-              {CHECKBOX_ITEMS.map((item) => (
-                <Checkbox
-                  key={item.value}
-                  {...native(field('hobbies'), {
-                    type: 'checkbox',
-                    value: item.value,
-                    valueKey: 'isChecked',
-                  })}
-                  isInvalid={hasError('hobbies')}
-                >
-                  {item.label}
-                </Checkbox>
-              ))}
-            </Stack>
-          </FormItem>
-          <FormItem label="Privacy" required error={getError('privacy')}>
-            {/* Select component */}
-            <Select {...native(field('privacy'))} isInvalid={hasError('privacy')}>
-              {SELECT_ITEMS.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </Select>
-          </FormItem>
-          <Button colorScheme="green" onClick={submit}>
-            Login
+        <VStack spacing={4} align="flex-start">
+          <FormControl isInvalid={hasError('firstName')}>
+            <FormLabel htmlFor="firstName">First Name</FormLabel>
+            <Input id="firstName" {...native(field('firstName'))} />
+            <FormErrorMessage>{getError('firstName')}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={hasError('lastName')}>
+            <FormLabel htmlFor="lastName">Last Name</FormLabel>
+            <Input id="lastName" {...native(field('lastName'))} />
+            <FormErrorMessage>{getError('lastName')}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={hasError('email')}>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Input id="email" {...native(field('email'))} />
+            <FormErrorMessage>{getError('email')}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={hasError('gender')}>
+            <FormLabel htmlFor="gender">Gender</FormLabel>
+            <RadioGroup {...field('gender')}>
+              <HStack spacing={4}>
+                <Radio value="male">Male</Radio>
+                <Radio value="female">Female</Radio>
+              </HStack>
+            </RadioGroup>
+            <FormErrorMessage>{getError('gender')}</FormErrorMessage>
+          </FormControl>
+          <Button type="submit" colorScheme="green" width="full">
+            Submit
           </Button>
-        </Stack>
+        </VStack>
       </form>
     </Box>
   );
 };
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/react-ts-ta9vnp?file=ExampleForm.tsx)
+[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/chakra-ui-3682p6)

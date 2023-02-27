@@ -15,8 +15,8 @@ type StandardFormComponentProps = {
    * following props is optional
    * you can implement it if you want to have better validation interactions
    */
-  onBlur?: () => void; // determine if form component is touched
-  ref?: any; // store form component ref use for auto-focus when validate failed
+  onBlur?: () => void; // use for validate after touched
+  ref?: any; // use for auto-focus when validate failed
 };
 ```
 
